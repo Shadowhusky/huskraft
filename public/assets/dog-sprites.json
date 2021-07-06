@@ -1,0 +1,104 @@
+{
+	"textures": [
+		{
+			"image": "dog-sprites.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 392,
+				"h": 86
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Dog_Left0.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 102,
+						"h": 84
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 102,
+						"h": 84
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 102,
+						"h": 84
+					}
+				},
+				{
+					"filename": "Dog_Right0.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 102,
+						"h": 84
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 102,
+						"h": 84
+					},
+					"frame": {
+						"x": 105,
+						"y": 1,
+						"w": 102,
+						"h": 84
+					}
+				},
+				{
+					"filename": "Dog_Left1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 102,
+						"h": 84
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 0,
+						"w": 90,
+						"h": 84
+					},
+					"frame": {
+						"x": 209,
+						"y": 1,
+						"w": 90,
+						"h": 84
+					}
+				},
+				{
+					"filename": "Dog_Right1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 102,
+						"h": 84
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 0,
+						"w": 90,
+						"h": 84
+					},
+					"frame": {
+						"x": 301,
+						"y": 1,
+						"w": 90,
+						"h": 84
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:df7a273e0ef9f5e9cc95e6d87d56d38d:24985db4ea0f40f43890aea61905f39e:8a551314f0b57907f8ca635b8d6c4cbb$"
+	}
+}

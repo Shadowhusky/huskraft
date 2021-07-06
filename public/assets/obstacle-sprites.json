@@ -1,0 +1,83 @@
+{
+	"textures": [
+		{
+			"image": "obstacle-sprites.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 52,
+				"h": 306
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Rigid-high.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 150
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 50,
+						"h": 150
+					}
+				},
+				{
+					"filename": "cactus_medium.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 100
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 100
+					},
+					"frame": {
+						"x": 1,
+						"y": 153,
+						"w": 50,
+						"h": 100
+					}
+				},
+				{
+					"filename": "cactus_low.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 50
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
+					},
+					"frame": {
+						"x": 1,
+						"y": 255,
+						"w": 50,
+						"h": 50
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:3a13f36cd904626142f6fd0f20dbc6f7:908d5e001be7b294c9e372b0d1b1164c:bfdf3ca0dc54c34538c9eb1294ce5067$"
+	}
+}
