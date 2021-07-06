@@ -1,0 +1,44 @@
+$prefix: Menu;
+
+.#{$prefix}-wrapper {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  flex-direction: column;
+
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 60px;
+
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+  transition: opacity 0.2s;
+}
+
+.#{$prefix}-menuItem-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 15px 40px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  cursor: pointer;
+  width: 150px;
+  height: 25px;
+  font-size: 20px;
+  text-align: center;
+  margin: 12px 0;
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  transition: font-size 0.2s;
+
+  &:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    font-size: 19px;
+  }
+}
