@@ -10,7 +10,7 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "Rigid-high.png",
+					"filename": "cactus_high.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -78,6 +78,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:3a13f36cd904626142f6fd0f20dbc6f7:908d5e001be7b294c9e372b0d1b1164c:bfdf3ca0dc54c34538c9eb1294ce5067$"
+		"smartupdate": "$TexturePacker:SmartUpdate:02fc15b7e638b7aaeee5ac29c19e209e:908d5e001be7b294c9e372b0d1b1164c:bfdf3ca0dc54c34538c9eb1294ce5067$"
 	}
 }

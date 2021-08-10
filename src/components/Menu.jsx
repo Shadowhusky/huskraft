@@ -50,7 +50,7 @@ function Menu(props) {
   return (
     <div
       className={prefix + "wrapper"}
-      style={{ opacity: gameState < 3 ? 1 : 0 }}
+      style={{ opacity: gameState < 3 && gameState !== -1 ? 1 : 0 }}
     >
       <MenuItem title="Arcade mode" onClick={onArcadeButtonClick} />
       <MenuItem title="Auto(AI)" onClick={onAIButtonClick} />

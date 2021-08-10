@@ -13,10 +13,12 @@ const prefix = "GameCanvas-";
 let jumpCount = 2;
 let jumpKey;
 
+let gameState_ = -1;
+
 function GameCanvas() {
   const [scene, setScene] = useState();
-  // 0: Pending 1: Paused(Arcade) 2:Paused(AI) 3: Runnning(Arcade) 4: Running(AI)
-  const [gameState, setGameState] = useState(0);
+  // -1: Loading 0: Pending 1: Paused(Arcade) 2:Paused(AI) 3: Runnning(Arcade) 4: Running(AI)
+  const [gameState, setGameState] = useState(-1);
   const [player, setPlayer] = useState();
   const canvasRef = useRef(null);
 
@@ -52,17 +54,25 @@ function GameCanvas() {
       });
 
       this.load.atlas(
-        "sheet",
+        "dog_sheet",
         "assets/dog-sprites.png",
         "assets/dog-sprites.json"
       );
 
-      // Load body shapes from JSON file generated using PhysicsEditor
-      this.load.json("shapes", "assets/dog-shapes.json");
+      this.load.atlas(
+        "obstacle_sheet",
+        "assets/obstacle-sprites.png",
+        "assets/obstacle-sprites.json"
+      );
+
+      // Load character's body shapes from JSON file generated using PhysicsEditor
+      this.load.json("dog-shapes", "assets/dog-shapes.json");
+      this.load.json("obstacle-shapes", "assets/obstacle-shapes.json");
     }
 
     function create() {
-      var shapes = this.cache.json.get("shapes");
+      var dog_shapes = this.cache.json.get("dog-shapes");
+      var obstacle_shapes = this.cache.json.get("obstacle-shapes");
       this.matter.world.setBounds(0, 0, game.config.width, game.config.height);
 
       // load the map
@@ -70,8 +80,8 @@ function GameCanvas() {
 
       // tiles for the ground layer
       var groundTiles = map.addTilesetImage("block-sprites");
-      // create the ground layer
 
+      // create the ground layer
       const groundLayer = map.createLayer(
         "backgroundLayer",
         groundTiles,
@@ -86,24 +96,46 @@ function GameCanvas() {
       map.setCollisionByProperty({ collides: true });
       this.matter.world.convertTilemapLayer(groundLayer);
 
-      const player = this.matter.add.sprite(100, 0, "sheet", "Dog_Right0.png", {
-        shape: shapes.Dog_Right0,
-        restitution: 0,
-      });
+      const player = this.matter.add.sprite(
+        100,
+        0,
+        "dog_sheet",
+        "Dog_Right0.png",
+        {
+          shape: dog_shapes.Dog_Right0,
+          restitution: 0,
+        }
+      );
+
+      this.generateObstacle = (type, x, y) => {
+        const obstacle = this.matter.add.sprite(
+          x || game.config.width - 100,
+          y || player.y - 50,
+          "obstacle_sheet",
+          `${type}.png`,
+          {
+            shape: obstacle_shapes[type],
+          }
+        );
+        this.matter.body.setInertia(obstacle.body, Infinity);
+      };
 
       this.matter.body.setInertia(player.body, Infinity);
 
       // Reset jump count when player touch the ground
       this.matter.world.on(
         "collisionstart",
-        function (event, player, groundLayer) {
-          jumpCount = 2;
+        function (event, groundLayer, player) {
+          if (player.parent.label === "Dog_Right0" && groundLayer.addToWorld) {
+            if (gameState_ === -1) setGameState(0);
+            jumpCount = 2;
+          }
         }
       );
 
       this.cameras.main.setBounds(0, 0, game.config.width, groundLayer.height);
 
-      this.cameras.main.startFollow(player);
+      // this.cameras.main.startFollow(player);
 
       setScene(this);
 
@@ -121,6 +153,7 @@ function GameCanvas() {
 
   useEffect(() => {
     if (!scene || !player) return;
+    gameState_ = gameState;
     scene.input.keyboard.removeAllKeys(true);
     // Keyboard Events
     if (jumpKey) jumpKey.destroy();
@@ -133,6 +166,9 @@ function GameCanvas() {
         jumpCount--;
       }
     });
+    if (gameState > 2) {
+      scene.generateObstacle("cactus_high");
+    }
   }, [gameState, player, scene]);
 
   return (
