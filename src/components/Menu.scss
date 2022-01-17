@@ -7,6 +7,8 @@ $prefix: Menu;
   transform: translateX(-50%) translateY(-50%);
   display: flex;
   flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
 
   background-color: rgba(0, 0, 0, 0.3);
   padding: 60px;
@@ -15,6 +17,11 @@ $prefix: Menu;
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 
   transition: opacity 0.5s;
+
+  &.visible {
+    pointer-events: auto;
+    opacity: 1;
+  }
 }
 
 .#{$prefix}-menuItem-wrapper {

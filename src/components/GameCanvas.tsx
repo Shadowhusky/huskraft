@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Styles
 import "./GameCanvas.scss";
 
@@ -7,6 +8,7 @@ import Menu from "./Menu";
 // Utils
 import { useState, useEffect, useRef } from "react";
 import * as Phaser from "phaser";
+import { GAME_TYPE, Game } from "./GameEngine";
 
 const prefix = "GameCanvas-";
 
@@ -15,10 +17,22 @@ let jumpKey;
 
 let gameState_ = -1;
 
+export enum GAME_STATE {
+  EMPTY = -1,
+  LOADING = 0,
+  PENDING = 1,
+  PAUSED_ARCADE = 2,
+  PAUSED_AI = 3,
+  RUNNING_ARCADE = 4,
+  RUNNING_AI = 5,
+  End = 6,
+}
+
 function GameCanvas() {
-  const [scene, setScene] = useState();
+  const [scene, setScene] = useState<Phaser.Scene>();
   // -1: Loading 0: Pending 1: Paused(Arcade) 2:Paused(AI) 3: Runnning(Arcade) 4: Running(AI)
-  const [gameState, setGameState] = useState(-1);
+  const [gameState, setGameState] = useState<GAME_STATE>(-1);
+  const [game, setGame] = useState();
   const [player, setPlayer] = useState();
   const canvasRef = useRef(null);
 
@@ -44,8 +58,9 @@ function GameCanvas() {
       },
     };
     var game = new Phaser.Game(config);
+    setGame(game);
 
-    function preload() {
+    function preload(this: Phaser.Scene) {
       this.load.tilemapTiledJSON("map", "assets/background_map.json");
       // tiles in spritesheet
       this.load.spritesheet("block-sprites", "assets/block-sprites.png", {
@@ -70,9 +85,8 @@ function GameCanvas() {
       this.load.json("obstacle-shapes", "assets/obstacle-shapes.json");
     }
 
-    function create() {
+    function create(this: Phaser.Scene) {
       var dog_shapes = this.cache.json.get("dog-shapes");
-      var obstacle_shapes = this.cache.json.get("obstacle-shapes");
       this.matter.world.setBounds(0, 0, game.config.width, game.config.height);
 
       // load the map
@@ -107,19 +121,6 @@ function GameCanvas() {
         }
       );
 
-      this.generateObstacle = (type, x, y) => {
-        const obstacle = this.matter.add.sprite(
-          x || game.config.width - 100,
-          y || player.y - 50,
-          "obstacle_sheet",
-          `${type}.png`,
-          {
-            shape: obstacle_shapes[type],
-          }
-        );
-        this.matter.body.setInertia(obstacle.body, Infinity);
-      };
-
       this.matter.body.setInertia(player.body, Infinity);
 
       // Reset jump count when player touch the ground
@@ -153,9 +154,8 @@ function GameCanvas() {
 
   useEffect(() => {
     if (!scene || !player) return;
-    gameState_ = gameState;
     scene.input.keyboard.removeAllKeys(true);
-    // Keyboard Events
+    // Keyboard Event
     if (jumpKey) jumpKey.destroy();
     jumpKey = scene.input.keyboard.addKey("SPACE");
     jumpKey.on("down", function (event) {
@@ -166,9 +166,14 @@ function GameCanvas() {
         jumpCount--;
       }
     });
-    if (gameState > 2) {
-      scene.generateObstacle("cactus_high");
+    if (
+      gameState_ !== GAME_STATE.PAUSED_ARCADE &&
+      gameState_ !== GAME_STATE.PAUSED_AI &&
+      gameState === GAME_STATE.RUNNING_ARCADE
+    ) {
+      new Game(GAME_TYPE.ARCADE, game, scene, player);
     }
+    gameState_ = gameState;
   }, [gameState, player, scene]);
 
   return (
